@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.LoginRequest;
 import com.example.demo.entity.User;
 import com.example.demo.entity.enumns.Role;
 import com.example.demo.repositry.UserRepositry;
@@ -17,15 +18,16 @@ public class AuthenticationService {
 	}
 	
 	
-	public User verify(String name, String password) {
-		User user = userRepositry.findByName(name);
-		if(user == null)
-			return null;
+	public String verify(LoginRequest loginRequest) {
 		
-		if(!password.equals(user.getPassword()))
-			return null;
+		User user = userRepositry.findByName(loginRequest.getName()).orElse(null);
 		
-		return user;
+		// If the user is not found or if password is wrong
+		if(user == null || !user.getPassword().equals(loginRequest.getPassword()))
+			return "Invalid Credentials";
+		
+		
+		return verifyRole(user);
 	}
 	
 	public String verifyRole(User user) {

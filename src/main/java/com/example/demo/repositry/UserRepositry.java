@@ -1,11 +1,13 @@
 package com.example.demo.repositry;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.User;
 
 public interface UserRepositry extends JpaRepository<User, Integer>{
 	
-	User findByName(String name);
+	Optional<User> findByName(String name);
 	
 }

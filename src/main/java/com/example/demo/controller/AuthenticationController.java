@@ -21,12 +21,10 @@ public class AuthenticationController {
 	@PostMapping("/verify")
 	public String getData(@RequestBody LoginRequest loginRequest) {
 		
-		User getUser = authenticationService.verify(loginRequest.getName(), loginRequest.getPassword());
-		if(getUser == null)
-			return "Invalid Credentials";
+		return authenticationService.verify(loginRequest);
 		
-		String message = authenticationService.verifyRole(getUser);
-		return message;
+		/*String message = authenticationService.verifyRole(getUser);
+		return message;*/
 	}
 	
 	@PostMapping("/addUser")
